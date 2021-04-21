@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: bisque;
+    font-size: 20px;
+}
+
+td {
+    height: 20px;
+}
+
+thead th:nth-child(1) {
+    width: 5%;
+}
+
+thead th:nth-child(2) {
+    width: 50%;
+}
+
+thead th:nth-child(3) {
+    width: 30%;
+}
+
+thead th:nth-child(4) {
+    width: 15%;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 2px solid gray;
+}
+
+td:hover {
+    background-color: #1a331a;
+    color: white;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #87e474;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #b3ffaf;
+}
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabl-head {
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+.tabl-body {
+    background-color: aliceblue;
+    cursor: pointer;
+}
+
+.tabl-footer {
+    background-color: aquamarine;
+}
+
+.add-row {
+    margin-top: 5px;
+    margin-right: 5px;
+    float: right;
+    cursor: pointer;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    text-decoration: none;
+    width: 30px;
+    height: 30px;
+}
+
+.add-row:hover {
+    color: red;
+}
+
+.save {
+    margin-top: 5px;
+    margin-right: 5px;
+    float: right;
+    background: url('media/save_icon.png');
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    justify-content: flex-end;
+}
+
+.delete {
+    width: 15px;
+    color: red;
+    text-align: center;
+    background-color: #000000;
+}
