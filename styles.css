@@ -47,6 +47,17 @@ tbody tr:nth-child(even) {
     background-color: #b3ffaf;
 }
 
+#update {
+    color: #6b311a;
+    cursor: pointer;
+    text-align: center;
+}
+
+.invalid {
+    background-color: red;
+    color: white;
+}
+
 .main-table {
     width: 100%;
     border-collapse: collapse;
