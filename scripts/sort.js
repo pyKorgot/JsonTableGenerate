@@ -1,5 +1,4 @@
 function sortTable(n) {
-    formatBirthday();
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("tableID");
     switching = true;
@@ -37,14 +36,16 @@ function sortTable(n) {
                     }
                 }
             } else if (n == 2) {
+                let date_x = x.getElementsByClassName('birthdayInput')[0].value;
+                let date_y = y.getElementsByClassName('birthdayInput')[0].value;
                 if (dir == "asc") {
-                    if (Date.parse(x.innerHTML) > Date.parse(y.innerHTML)) {
+                    if (Date.parse(date_x) > Date.parse(date_y)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
                         break;
                     }
                 } else if (dir == "desc") {
-                    if (Date.parse(x.innerHTML) < Date.parse(y.innerHTML)) {
+                    if (Date.parse(date_x) < Date.parse(date_y)) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
                         break;
@@ -82,6 +83,4 @@ function sortTable(n) {
             }
         }
     }
-    changeId();
-    updateTable();
 }

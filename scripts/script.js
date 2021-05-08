@@ -9,13 +9,6 @@ function getHeaderForTable() {
     return header;
 }
 
-function getBirthday(data) {
-    // return birthday for tbody
-    let birthday = new Date(data);
-
-    return birthday.toDateString();
-}
-
 function getBodyForTable(database) {
     // function return information for table
     keys = ['id', 'name', 'age', 'salary']; // keys for json
@@ -28,8 +21,9 @@ function getBodyForTable(database) {
             } else if (j == 1) {
                 tableBody += `<td contenteditable='true' class="name">${database[i][keys[j]]}</td>`;
             } else if (j == 2) {
-                let birthday = getBirthday(database[i][keys[j]])
-                tableBody += `<td contenteditable='true' class="birthday">${birthday}</td>`;
+                tableBody += `<td class="birthday">
+                <input type="date" class="birthdayInput" value="${database[i][keys[j]]}" max="2020-01-01">
+                    </td>`;
             } else if (j == 3) {
                 tableBody += `<td contenteditable='true' class="salary">${database[i][keys[j]]}</td>`;
             } else {
@@ -75,8 +69,7 @@ function createTable(tableRef, tableInfo, maxNum, sumSalary) {
     footTr.innerHTML = `<td>Итого</td>
                         <td><span id="quantity">${maxNum}</span></td>
                         <td><span id="quantity1">${maxNum}</span></td>
-                        <td><span id="sumSalary">${sumSalary}</span></td>
-                        <td id="update" onclick="updateTable()">U</td>`;
+                        <td colspan="2"><span id="sumSalary">${sumSalary}</span></td>`;
     tableRef.appendChild(footTr);
 }
 
@@ -112,25 +105,6 @@ function changeId() {
     }
 }
 
-function formatBirthday() {
-    let birthdays = document.getElementsByClassName("birthday");
-    for (i = 0; i < birthdays.length; i++) {
-        if (birthdays[i].innerHTML == 'YYYY-MM-DD') {
-            birthdays[i].classList.add('invalid');
-        } else {
-            let date = new Date(birthdays[i].innerHTML);
-            if (date == 'Invalid Date') {
-                birthdays[i].innerHTML = "YYYY-MM-DD";
-                birthdays[i].classList.add('invalid');
-
-            } else {
-                birthdays[i].innerHTML = date.toDateString();
-                birthdays[i].classList.remove('invalid');
-            }
-        }
-    }
-}
-
 
 /* Add and Delete items in table */
 function addRow() {
@@ -141,14 +115,13 @@ function addRow() {
     let editable = '<td contenteditable="true"';
     row.innerHTML = `<td class="id"></td>
     ${editable} class="name"></td>
-    ${editable} class="birthday">YYYY-MM-DD</td>
+    <td class="birthday">
+    <input type="date" class="birthdayInput" value="0" max="2020-01-01"></td>
     ${editable} class="salary">0</td>
     <td class="delete"><buton onclick="deleteRow(this)">X</buton></td><tr>`;
     tbody.appendChild(row);
 
     changeQuanity(1);
-    changeId();
-    updateTable();
 }
 
 function deleteRow(btn) {
@@ -157,8 +130,6 @@ function deleteRow(btn) {
     row.parentNode.removeChild(row);
 
     changeQuanity(-1);
-    changeId();
-    updateTable();
 }
 
 
@@ -168,29 +139,10 @@ function saveTable() {
     alert("We don't have server with database, to save your changes");
 }
 
-function updateTable() {
-    // Update items in table
-    let sumSalary = document.getElementById("sumSalary");
-    let salarys = document.getElementsByClassName("salary");
-    let sum = 0;
-    for (i = 0; i < salarys.length; i++) {
-        sum += +salarys[i].innerHTML;
-    }
-    sumSalary.innerHTML = sum;
-
-    changeId();
-    formatBirthday();
-    validate();
-}
-
 function validate() {
     let salarys = document.getElementsByClassName("salary");
     for (i = 0; i < salarys.length; i++) {;
-        if (isNaN(+salarys[i].innerHTML)) {
-            salarys[i].innerHTML = '0';
-            updateTable();
-        }
-        if (salarys[i].innerHTML == 0) {
+        if (isNaN(+salarys[i].innerHTML) || salarys[i].innerHTML == 0) {
             salarys[i].classList.add('invalid');
         } else {
             salarys[i].classList.remove('invalid');
@@ -204,7 +156,32 @@ function validate() {
             names[i].classList.remove('invalid');
         }
     }
+    let birthdays = document.getElementsByClassName("birthday");
+    for (i = 0; i < birthdays.length; i++) {
+        let bdVal = birthdays[i].getElementsByClassName("birthdayInput")[0].value;
+        if (bdVal == 0) {
+            birthdays[i].classList.add('invalid');
+        } else {
+            birthdays[i].classList.remove('invalid');
+
+        }
+    }
 }
 
+function updateTable() {
+    // Update items in table
+    let sumSalary = document.getElementById("sumSalary");
+    let salarys = document.getElementsByClassName("salary");
+    let sum = 0;
+    for (i = 0; i < salarys.length; i++) {
+        sum += +salarys[i].innerHTML;
+    }
+    sumSalary.innerHTML = sum;
+
+    changeId();
+    validate();
+}
 
 let maxNum = createMain(); // start create table
+
+let timerUpdate = setInterval(updateTable, 1);

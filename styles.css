@@ -58,6 +58,10 @@ tbody tr:nth-child(even) {
     color: white;
 }
 
+.invalid:hover {
+    background-color: brown;
+}
+
 .main-table {
     width: 100%;
     border-collapse: collapse;
@@ -75,6 +79,11 @@ tbody tr:nth-child(even) {
 
 .tabl-footer {
     background-color: aquamarine;
+}
+
+.birthdayInput {
+    width: 100%;
+    background-color: transparent;
 }
 
 .add-row {
