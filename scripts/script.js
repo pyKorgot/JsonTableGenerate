@@ -105,6 +105,25 @@ function changeId() {
     }
 }
 
+function changeSalary() {
+    // validate format in salary fields, delete symbols if not digit
+    salarys = document.getElementsByClassName('salary');
+    for (i = 0; i < salarys.length; i++) {
+        strNum = salarys[i].innerHTML;
+        if (isNaN(+strNum)) {
+            dictStr = strNum.split('');
+            for (j = 0; j < dictStr.length; j++) {
+                if (isNaN(+(dictStr[j]))) {
+                    dictStr[j] = '';
+                }
+            }
+            strNum = dictStr.join('')
+            if (strNum == '') {}
+            salarys[i].innerHTML = strNum;
+        }
+    }
+}
+
 
 /* Add and Delete items in table */
 function addRow() {
@@ -114,11 +133,11 @@ function addRow() {
 
     let editable = '<td contenteditable="true"';
     row.innerHTML = `<td class="id"></td>
-    ${editable} class="name"></td>
-    <td class="birthday">
-    <input type="date" class="birthdayInput" value="0" max="2020-01-01"></td>
-    ${editable} class="salary">0</td>
-    <td class="delete"><buton onclick="deleteRow(this)">X</buton></td><tr>`;
+        ${editable} class="name"></td>
+        <td class="birthday">
+        <input type="date" class="birthdayInput" value="" max="2020-01-01"></td>
+        ${editable} class="salary"></td>
+        <td class="delete"><buton onclick="deleteRow(this)">X</buton></td><tr>`;
     tbody.appendChild(row);
 
     changeQuanity(1);
@@ -140,6 +159,7 @@ function saveTable() {
 }
 
 function validate() {
+    // function to check valid inform in fields
     let salarys = document.getElementsByClassName("salary");
     for (i = 0; i < salarys.length; i++) {;
         if (isNaN(+salarys[i].innerHTML) || salarys[i].innerHTML == 0) {
@@ -174,11 +194,15 @@ function updateTable() {
     let salarys = document.getElementsByClassName("salary");
     let sum = 0;
     for (i = 0; i < salarys.length; i++) {
+        if (isNaN(+salarys[i].innerHTML)) {
+            continue;
+        }
         sum += +salarys[i].innerHTML;
     }
     sumSalary.innerHTML = sum;
 
     changeId();
+    changeSalary();
     validate();
 }
 
