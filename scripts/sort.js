@@ -1,7 +1,8 @@
 function sortTable(n) {
-    let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    let table, rows, switching, i, x, y, shouldSwitch, dir, col, switchcount = 0;
     table = document.getElementById("tableID");
     switching = true;
+    col = headers.indexOf(n)
     // Set the sorting direction to ascending:
     dir = "asc";
     /* Make a loop that will continue until
@@ -17,11 +18,11 @@ function sortTable(n) {
             shouldSwitch = false;
             /* Get the two elements you want to compare,
             one from current row and one from the next: */
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+            x = rows[i].getElementsByTagName("TD")[col];
+            y = rows[i + 1].getElementsByTagName("TD")[col];
             /* Check if the two rows should switch place,
             based on the direction, asc or desc: */
-            if (n == 1) {
+            if (n == 'name') {
                 if (dir == "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                         // If so, mark as a switch and break the loop:
@@ -35,7 +36,7 @@ function sortTable(n) {
                         break;
                     }
                 }
-            } else if (n == 2) {
+            } else if (n == 'birthday') {
                 let date_x = x.getElementsByClassName('birthdayInput')[0].value;
                 let date_y = y.getElementsByClassName('birthdayInput')[0].value;
                 if (dir == "asc") {
@@ -51,7 +52,7 @@ function sortTable(n) {
                         break;
                     }
                 }
-            } else if (n == 3) {
+            } else if (n == 'salary') {
                 if (dir == "asc") {
                     if (+x.innerHTML > +y.innerHTML) {
                         // If so, mark as a switch and break the loop:

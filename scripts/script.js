@@ -1,10 +1,26 @@
 /* First create Table */
 function getHeaderForTable() {
     // return header fot table
-    let header = `<th>№</th>
-    <th onclick="sortTable(1)">ФИО</th>
-    <th onclick="sortTable(2)">Дата рождения</th>
-    <th colspan="2" onclick="sortTable(3)">Оклад</th>`
+    let header = `<th class="id">
+                  <span class="dir left" onclick="movingColumn('id', 'left')"><</span>
+                    <span>№</span>
+                  <span class="dir right" onclick="movingColumn('id', 'right')">></span>
+                  </th>
+                  <th class="name">
+                  <span class="dir left" onclick="movingColumn('name', 'left')"><</span> 
+                    <span onclick="sortTable('name')">ФИО</span>
+                  <span class="dir right" onclick="movingColumn('name', 'right')">></span>
+                  </th>
+                  <th class="birthday">
+                  <span class="dir left" onclick="movingColumn('birthday', 'left')"><</span>    
+                    <span onclick="sortTable('birthday')">Дата рождения</span>
+                  <span class="dir right" onclick="movingColumn('birthday', 'right')">></span>
+                  </th>
+                  <th class='salary' colspan="2">
+                  <span class="dir left" onclick="movingColumn('salary', 'left')"><</span>
+                    <span onclick="sortTable('salary')">Оклад</span>
+                  <span class="dir right" onclick="movingColumn('salary', 'right')">></span>
+                  </th>`
 
     return header;
 }
@@ -27,7 +43,7 @@ function getBodyForTable(database) {
             } else if (j == 3) {
                 tableBody += `<td contenteditable='true' class="salary">${database[i][keys[j]]}</td>`;
             } else {
-                tableBody += `<td contenteditable='true'>${database[i][keys[j]]}</td>`;
+                tableBody += `<td contenteditable='true' class='sum'>${database[i][keys[j]]}</td>`;
             }
         }
         if (i == database.length - 1) {
@@ -66,10 +82,10 @@ function createTable(tableRef, tableInfo, maxNum, sumSalary) {
     // create footer table
     let footTr = document.createElement('tfoot');
     footTr.className = ('tabl-footer');
-    footTr.innerHTML = `<td>Итого</td>
-                        <td><span id="quantity">${maxNum}</span></td>
-                        <td><span id="quantity1">${maxNum}</span></td>
-                        <td colspan="2"><span id="sumSalary">${sumSalary}</span></td>`;
+    footTr.innerHTML = `<td class='result'>Итого</td>
+                        <td class='quanity'><span id="quantity">${maxNum}</span></td>
+                        <td class='quanity'><span id="quantity1">${maxNum}</span></td>
+                        <td class='sum' colspan="2"><span id="sumSalary">${sumSalary}</span></td>`;
     tableRef.appendChild(footTr);
 }
 
@@ -100,15 +116,15 @@ function changeQuanity(num) {
 function changeId() {
     // Change Id in first column if create or delete row
     let rows = document.getElementsByClassName("id");
-    for (i = 0; i < rows.length; i++) {
-        let id = rows[i].innerHTML = i + 1;
+    for (i = 1; i < rows.length; i++) {
+        let id = rows[i].innerHTML = i;
     }
 }
 
 function changeSalary() {
     // validate format in salary fields, delete symbols if not digit
     salarys = document.getElementsByClassName('salary');
-    for (i = 0; i < salarys.length; i++) {
+    for (i = 1; i < salarys.length; i++) {
         strNum = salarys[i].innerHTML;
         if (isNaN(+strNum)) {
             dictStr = strNum.split('');
@@ -161,7 +177,7 @@ function saveTable() {
 function validate() {
     // function to check valid inform in fields
     let salarys = document.getElementsByClassName("salary");
-    for (i = 0; i < salarys.length; i++) {;
+    for (i = 1; i < salarys.length; i++) {;
         if (isNaN(+salarys[i].innerHTML) || salarys[i].innerHTML == 0) {
             salarys[i].classList.add('invalid');
         } else {
@@ -169,7 +185,7 @@ function validate() {
         }
     }
     let names = document.getElementsByClassName("name");
-    for (i = 0; i < salarys.length; i++) {
+    for (i = 1; i < salarys.length; i++) {
         if (names[i].innerHTML == '') {
             names[i].classList.add('invalid');
         } else {
@@ -177,7 +193,7 @@ function validate() {
         }
     }
     let birthdays = document.getElementsByClassName("birthday");
-    for (i = 0; i < birthdays.length; i++) {
+    for (i = 1; i < birthdays.length; i++) {
         let bdVal = birthdays[i].getElementsByClassName("birthdayInput")[0].value;
         if (bdVal == 0) {
             birthdays[i].classList.add('invalid');
