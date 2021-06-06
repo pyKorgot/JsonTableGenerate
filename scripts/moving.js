@@ -45,7 +45,6 @@ function changeColumn(col, firstVar, secondVar, iter, rows) {
         col[secondVar].getElementsByTagName('input')[0].value = tmpDate;
     }
     col[secondVar].classList.add(tmpClass);
-
 }
 
 

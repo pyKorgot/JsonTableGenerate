@@ -144,18 +144,28 @@ function changeSalary() {
 /* Add and Delete items in table */
 function addRow() {
     // function to create new row
-    var tbody = document.getElementsByTagName("tbody")[0];
-    var row = document.createElement("tr");
+    let tbody = document.getElementsByTagName("tbody")[0];
+    let row = document.createElement("tr");
+    let newRow = '';
 
     let editable = '<td contenteditable="true"';
-    row.innerHTML = `<td class="id"></td>
-        ${editable} class="name"></td>
-        <td class="birthday">
-        <input type="date" class="birthdayInput" value="" max="2020-01-01"></td>
-        ${editable} class="salary"></td>
-        <td class="delete"><buton onclick="deleteRow(this)">X</buton></td><tr>`;
-    tbody.appendChild(row);
+    for (let i = 0; i <= headers.length; i++) {
+        if (headers[i] == 'id') {
+            newRow += '<td class="id"></td>';
+        } else if (headers[i] == 'name') {
+            newRow += `${editable} class="name"></td>`;
+        } else if (headers[i] == 'birthday') {
+            newRow += `<td class="birthday">
+                    <input type="date" class="birthdayInput" value="" max="2020-01-01"></td>`;
+        } else if (headers[i] == 'salary') {
+            newRow += `${editable} class="salary"></td>`;
+        } else {
+            newRow += `<td class="delete"><buton onclick="deleteRow(this)">X</buton></td><tr>`;
+        }
+    }
 
+    row.innerHTML = newRow;
+    tbody.appendChild(row);
     changeQuanity(1);
 }
 
