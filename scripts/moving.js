@@ -10,7 +10,7 @@ function changeHeaders(head, firstVar, secondVar) {
 
 function changeColumn(col, firstVar, secondVar, iter, rows) {
     // Change position column
-    let tmp, tmpClass, tmpDate, dateField1 = false,
+    let tmp, tmpClass, tmpDate, tmpContEdit, dateField1 = false,
         dateField2 = false;
 
 
@@ -23,11 +23,16 @@ function changeColumn(col, firstVar, secondVar, iter, rows) {
         tmpDate = col[secondVar].getElementsByTagName('input')[0].value;
     }
 
+    col[firstVar].classList.remove('invalid');
+    col[secondVar].classList.remove('invalid');
+
+    tmpContEdit = col[firstVar].contentEditable;
     tmpClass = col[firstVar].className;
     tmp = col[firstVar].innerHTML;
     col[firstVar].classList.remove(tmpClass);
 
     col[firstVar].innerHTML = col[secondVar].innerHTML;
+    col[firstVar].contentEditable = col[secondVar].contentEditable;
     if (dateField2) {
         col[firstVar].getElementsByTagName('input')[0].value = tmpDate;
     }
@@ -35,6 +40,7 @@ function changeColumn(col, firstVar, secondVar, iter, rows) {
 
     col[secondVar].classList.remove(col[secondVar].className);
     col[secondVar].innerHTML = tmp;
+    col[secondVar].contentEditable = tmpContEdit;
     if (dateField1) {
         col[secondVar].getElementsByTagName('input')[0].value = tmpDate;
     }
